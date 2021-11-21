@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package adminusers.v1;
+import "third_party/errors/errors.proto";
+
+option go_package = ".;v1";
+option java_multiple_files = true;
+option java_package = "adminusers.v1.errors";
+option objc_class_prefix = "APIAdminUsersErrors";
+
+enum ErrorReason {
+  option (errors.default_code) = 500;
+
+  USER_NOT_FOUND = 0 [(errors.code) = 404];
+  CONTENT_MISSING = 1 [(errors.code) = 400];
+  USER_NOT_CREATE = 2 [(errors.code) = 401];
+  USER_NOT_UPDATE = 3 [(errors.code) = 401];
+  USER_NOT_GET = 4 [(errors.code) = 401];
+  USER_NOT_DELETE = 5 [(errors.code) = 401];
+  USER_NOT_LIST = 6 [(errors.code) = 401];
+  USER_PASSWORD_ERROR = 7 [(errors.code) = 401];
+  API_VERSION_NOT_UNSUPPORTED = 8 [(errors.code) = 403];
+  API_TOKEN_ERROR = 9 [(errors.code) = 401];
+  JWT_TOKEN_MISSING = 10 [(errors.code) = 401];
+}

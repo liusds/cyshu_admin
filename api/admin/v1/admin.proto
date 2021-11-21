@@ -1,0 +1,151 @@
+syntax = "proto3";
+
+package api.admin.v1;
+
+option go_package = ".;v1";
+option java_multiple_files = true;
+option java_package = "api.admin.v1";
+import "third_party/google/api/annotations.proto";
+
+service CyshuAdmin {
+	rpc CreateUsers (CreateUsersRequest) returns (CreateUsersReply) {
+		option(google.api.http) = {
+			post: "/api/user"
+			body: "*"
+		};
+	};
+	rpc UpdateUsers (UpdateUsersRequest) returns (UpdateUsersReply) {
+		option(google.api.http) = {
+			put: "/api/user/{user.id}"
+			body: "*"
+			additional_bindings {
+				patch: "/api/user/{user.id}"
+				body: "*"
+			}
+		};
+	};
+	rpc DeleteUsers (DeleteUsersRequest) returns (DeleteUsersReply) {
+		option(google.api.http) = {
+			delete: "/api/user/{id}"
+		};
+	};
+	rpc GetUsers (GetUsersRequest) returns (GetUsersReply) {
+		option(google.api.http) = {
+			get: "/api/user/{id}"
+		};
+	};
+	rpc ListUsers (ListUsersRequest) returns (ListUsersReply) {
+		option(google.api.http) = {
+			get: "/api/all"
+		};
+	};
+	rpc Register (RegisterRequest) returns (RegisterReply) {
+		option(google.api.http) = {
+			post: "/register"
+			body: "*"
+		};
+	};
+	rpc Login (LoginRequest) returns (LoginReply) {
+		option(google.api.http) = {
+			post: "/login"
+			body: "*"
+		};
+	};
+	rpc Logout (LogoutRequest) returns (LogoutReply) {
+		option(google.api.http) = {
+			get: "/logout/{id}"
+		};
+	};
+}
+
+message User {
+	int64 id = 1;
+    string username = 2;
+    string password = 3;
+    string role = 4;
+    string userPhoto = 5;
+    int64 userPhone = 6;
+}
+
+message Respond {
+	int64 code = 1;
+	string status = 2;
+	string message = 3;
+}
+
+message Result {
+	int64 code = 1;
+	string token = 2;
+	string message = 3;
+}
+
+message CreateUsersRequest {
+	string api = 1;
+	User user = 2;
+}
+message CreateUsersReply {
+	string api = 1;
+	Respond respond = 2;
+}
+
+message UpdateUsersRequest {
+	string api = 1;
+	User user = 2;
+}
+message UpdateUsersReply {
+	string api = 1;
+	Respond respond = 2;
+}
+
+message DeleteUsersRequest {
+	string api = 1;
+	int64 id = 2;
+}
+message DeleteUsersReply {
+	string api = 1;
+	Respond respond = 2;
+}
+
+message GetUsersRequest {
+	string api = 1;
+	int64 id = 2;
+}
+message GetUsersReply {
+	string api = 1;
+	User user = 2;
+}
+
+message ListUsersRequest {
+	string api = 1;
+}
+message ListUsersReply {
+	string api = 1;
+	repeated User user = 2;
+}
+
+message RegisterRequest {
+	User user = 1;
+}
+
+message RegisterReply {
+	Respond respond = 1;
+}
+
+message LoginRequest {
+	string username = 1;
+	string password = 2;
+}
+
+message LoginReply {
+	Result result = 1;
+}
+
+message LogoutRequest {
+	string api = 1;
+	int64 id = 2;
+}
+
+message LogoutReply {
+	string api = 1;
+	Respond respond = 2;
+}
